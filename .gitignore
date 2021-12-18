@@ -3,3 +3,9 @@
 ################################################################################
 
 /.vs/password-validator/v16
+/.vs
+/PasswordValidator/.vs/PasswordValidator
+/PasswordValidator/PasswordValidator/bin/Debug/net5.0
+/PasswordValidator/PasswordValidator/obj
+/PasswordValidator/PasswordValidator.Business/obj
+/PasswordValidator/PasswordValidator.Business/bin/Debug/net5.0
