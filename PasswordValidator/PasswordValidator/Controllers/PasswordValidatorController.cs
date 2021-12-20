@@ -14,7 +14,7 @@ namespace PasswordValidator.Controllers
     public class PasswordValidatorController : ControllerBase
     {
         public IPasswordValidatorService _passwordValidatorService { get; set; }
-        
+
 
         private readonly ILogger<PasswordValidatorController> _logger;
 
@@ -37,10 +37,16 @@ namespace PasswordValidator.Controllers
         /// <returns>
         /// Ok or error list
         /// </returns>
-        [HttpGet]        
-        public PasswordValidationResult Get(string password)
+        [Produces(typeof(PasswordValidationResult))]
+        [HttpGet]
+        public ActionResult Get(string password)
         {
-            return _passwordValidatorService.Validate(password);
+            var result = _passwordValidatorService.Validate(password);
+            if(result.Success)
+            {
+                return Ok(new { success = true });
+            }
+            return Ok(result);
         }
     }
 }
