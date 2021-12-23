@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PasswordValidator.Business.DTOs;
+using PasswordValidator.Business.Extensions;
 using PasswordValidator.Business.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace PasswordValidator.Controllers
         }
 
         /// <summary>
-        /// Validate the password to match the following rules:
+        /// Validate the password to match the rules
         /// - Nine or more characters
         /// - At least one digit
         /// - At least one lowercase letter
@@ -35,18 +36,18 @@ namespace PasswordValidator.Controllers
         /// </summary>
         /// <param name="password">Password to validate</param>
         /// <returns>
-        /// Ok or error list
+        /// Success or validation errors list
         /// </returns>
         [Produces(typeof(PasswordValidationResult))]
-        [HttpGet]
-        public ActionResult Get(string password)
+        [HttpPost]
+        public ActionResult Validate(string password)
         {
             var result = _passwordValidatorService.Validate(password);
-            if(result.Success)
+            return Ok(new
             {
-                return Ok(new { success = true });
-            }
-            return Ok(result);
+                success = result.Success,
+                errors = result.Errors?.Select(e => new KeyValuePair<int, string>((int)e, e.GetDescription())).ToList()
+            });
         }
     }
 }

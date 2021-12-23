@@ -15,9 +15,10 @@ namespace PasswordValidator.Business.Services
     {
         public PasswordValidationResult Validate(string password)
         {
+            password ??= "";
             var result = new PasswordValidationResult() { Success = true };
-            string pattern = @"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!|@|#|$|%|^|&|*|(|)|\-|+])(?=\S+$).{9,}$";
-            if(!Regex.Matches(password, pattern, RegexOptions.Singleline).Any())
+            string pattern = @"^(?!.*(.).*\1)(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!|@|#|$|%|^|&|*|(|)|\-|+])(?=\S+$).{9,}$";
+            if(!Regex.IsMatch(password, pattern, RegexOptions.Singleline))
             {
                 result.Success = false;
                 result.Errors = GetValidationErrors(password);
@@ -29,27 +30,33 @@ namespace PasswordValidator.Business.Services
         {
             var errors = new List<PasswordValidationErrorEnum>();
             char[] specialCaracters = { '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '+' };
-
+            password ??= "";
+            // Nine or more characters
             if (password.Length < 9)
             {
                 errors.Add(PasswordValidationErrorEnum.LessThanNineChars);
             }
+            // At least one digit
             if (!password.Any(char.IsDigit))
             {
                 errors.Add(PasswordValidationErrorEnum.NoDigits);
             }
+            // At least one lowercase letter
             if (!password.Any(char.IsLower))
             {
                 errors.Add(PasswordValidationErrorEnum.NoLowercaseLetters);
             }
+            // At least one uppercase letter
             if (!password.Any(char.IsUpper))
             {
                 errors.Add(PasswordValidationErrorEnum.NoUppercaseLetters);
             }
+            // At least one special character (Consider !@#$%^&amp;&#42;()-+ as special characters)
             if (!password.Any(letter => specialCaracters.Any(specialChar => specialChar == letter)))
             {
                 errors.Add(PasswordValidationErrorEnum.NoSpecialChars);
             }
+            // No repeated characters
             if (password.Length != password.Distinct().Count())
             {
                 errors.Add(PasswordValidationErrorEnum.RepeatedChars);

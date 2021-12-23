@@ -9,3 +9,5 @@
 /PasswordValidator/PasswordValidator/obj
 /PasswordValidator/PasswordValidator.Business/obj
 /PasswordValidator/PasswordValidator.Business/bin/Debug/net5.0
+/PasswordValidator/PasswordValidator.Business.Tests/bin/Debug/net5.0
+/PasswordValidator/PasswordValidator.Business.Tests/obj

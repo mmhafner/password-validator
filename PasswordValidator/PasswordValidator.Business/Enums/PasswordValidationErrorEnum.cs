@@ -4,7 +4,7 @@ namespace PasswordValidator.Business.Enums
 {
     public enum PasswordValidationErrorEnum
     {
-        [Description("The password is less than p characters")]
+        [Description("The password is less than 9 characters")]
         LessThanNineChars,
         [Description("The password has no digits")]
         NoDigits,
