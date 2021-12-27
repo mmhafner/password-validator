@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Moq.AutoMock;
 using PasswordValidator.Business.Interfaces;
-using PasswordValidator.Business.Services;
+using PasswordValidator.Business.Tests.Services.Fixtures;
 using Xunit;
 
 namespace PasswordValidator.Business.Tests.Services
@@ -17,7 +17,8 @@ namespace PasswordValidator.Business.Tests.Services
             _passwordValidatorService = _passwordValidatorServiceFixture.GetPasswordValidatorService();
         }
 
-        [Theory]
+        [Theory(DisplayName = "Validate - Valid Passwords")]
+        [Trait("Unit", "Business - PasswordValidatorService")]
         [InlineData("123qweEWQ#@!")]
         [InlineData("qwe123EWQ#@!")]
         [InlineData("#@!qweEWQ123")]
@@ -32,7 +33,8 @@ namespace PasswordValidator.Business.Tests.Services
             result.Errors.Should().BeNullOrEmpty();
         }
 
-        [Theory]
+        [Theory(DisplayName = "Validate - Invalid Passwords")]
+        [Trait("Unit", "Business - PasswordValidatorService")]
         [InlineData("")]
         [InlineData(null)]
         [InlineData("12qwEW!@")]
@@ -51,7 +53,8 @@ namespace PasswordValidator.Business.Tests.Services
             result.Errors.Should().HaveCountGreaterThan(0);
         }
 
-        [Theory]
+        [Theory(DisplayName = "Validate - Passwords Less Than Nine Characters")]
+        [Trait("Unit", "Business - PasswordValidatorService")]
         [InlineData("")]
         [InlineData(null)]
         [InlineData("12qwWQ@!")]
@@ -70,7 +73,8 @@ namespace PasswordValidator.Business.Tests.Services
             result.Errors.Should().Contain(Enums.PasswordValidationErrorEnum.LessThanNineChars);
         }
 
-        [Theory]
+        [Theory(DisplayName = "Validate - Passwords Has No Digits")]
+        [Trait("Unit", "Business - PasswordValidatorService")]
         [InlineData("qweEWQ#@!")]
         [InlineData("qwWQ#@!")]
         [InlineData("#@!qweEWQ")]
@@ -86,7 +90,8 @@ namespace PasswordValidator.Business.Tests.Services
             result.Errors.Should().Contain(Enums.PasswordValidationErrorEnum.NoDigits);
         }
 
-        [Theory]
+        [Theory(DisplayName = "Validate - Passwords Has No Lowercase Letters")]
+        [Trait("Unit", "Business - PasswordValidatorService")]
         [InlineData("123EWQ#@!")]
         [InlineData("12WQ#@!")]
         [InlineData("#@!123EWQ")]
@@ -102,7 +107,8 @@ namespace PasswordValidator.Business.Tests.Services
             result.Errors.Should().Contain(Enums.PasswordValidationErrorEnum.NoLowercaseLetters);
         }
 
-        [Theory]
+        [Theory(DisplayName = "Validate - Passwords Has No Uppercase Letters")]
+        [Trait("Unit", "Business - PasswordValidatorService")]
         [InlineData("qwe123#@!")]
         [InlineData("qw12#@!")]
         [InlineData("#@!qwe123")]
@@ -118,7 +124,8 @@ namespace PasswordValidator.Business.Tests.Services
             result.Errors.Should().Contain(Enums.PasswordValidationErrorEnum.NoUppercaseLetters);
         }
 
-        [Theory]
+        [Theory(DisplayName = "Validate - Passwords Has No Special Characters")]
+        [Trait("Unit", "Business - PasswordValidatorService")]
         [InlineData("qweEWQ123")]
         [InlineData("qwWQ123")]
         [InlineData("456qweEWQ")]
@@ -134,7 +141,8 @@ namespace PasswordValidator.Business.Tests.Services
             result.Errors.Should().Contain(Enums.PasswordValidationErrorEnum.NoSpecialChars);
         }
 
-        [Theory]
+        [Theory(DisplayName = "Validate - Passwords Has Repeated Chars")]
+        [Trait("Unit", "Business - PasswordValidatorService")]
         [InlineData("qweEWQqwe#@!")]
         [InlineData("q@wWQ#@!")]
         [InlineData("#@!qEweEWQ")]

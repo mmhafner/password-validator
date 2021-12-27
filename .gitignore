@@ -11,3 +11,5 @@
 /PasswordValidator/PasswordValidator.Business/bin/Debug/net5.0
 /PasswordValidator/PasswordValidator.Business.Tests/bin/Debug/net5.0
 /PasswordValidator/PasswordValidator.Business.Tests/obj
+/PasswordValidator/PasswordValidator.Api.Tests/bin/Debug/net5.0
+/PasswordValidator/PasswordValidator.Api.Tests/obj

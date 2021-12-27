@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PasswordValidator.Api.Model;
 using PasswordValidator.Business.DTOs;
+using PasswordValidator.Business.Enums;
 using PasswordValidator.Business.Extensions;
 using PasswordValidator.Business.Interfaces;
 using System;
@@ -40,13 +42,13 @@ namespace PasswordValidator.Controllers
         /// </returns>
         [Produces(typeof(PasswordValidationResult))]
         [HttpPost]
-        public ActionResult Validate(string password)
+        public ActionResult Validate([FromBody]string password)
         {
             var result = _passwordValidatorService.Validate(password);
-            return Ok(new
+            return Ok(new PasswordValidationResultModel
             {
-                success = result.Success,
-                errors = result.Errors?.Select(e => new KeyValuePair<int, string>((int)e, e.GetDescription())).ToList()
+                Success = result.Success,
+                Errors = result.Errors?.ToDictionary(t=> (int)t,t=> t.GetDescription())
             });
         }
     }

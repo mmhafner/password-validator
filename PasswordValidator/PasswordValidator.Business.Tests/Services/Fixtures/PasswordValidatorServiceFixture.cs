@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace PasswordValidator.Business.Tests.Services
+namespace PasswordValidator.Business.Tests.Services.Fixtures
 {
     [CollectionDefinition(nameof(PasswordValidatorServiceCollection))]
     public class PasswordValidatorServiceCollection : ICollectionFixture<PasswordValidatorServiceFixture>
